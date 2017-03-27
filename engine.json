@@ -1,0 +1,11 @@
+{
+  "name": "grep",
+  "description": "grep searches for specific strings",
+  "maintainer": {
+    "name": "Code Climate",
+    "email": "hello@codeclimate.com"
+  },
+  "languages" : ["*"],
+  "version": "0.1",
+  "spec_version": "0.3.1"
+}

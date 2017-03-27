@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/cc/engine/grep"
+
+CODE_DIR = "/code"
+
+ENGINE_CONFIG =
+  if File.exist?("/config.json")
+    begin
+      JSON.parse(File.read("/config.json"))
+    rescue Errno::EISDIR
+      {}
+    end
+  else
+    {}
+  end
+
+CC::Engine::Grep.new(
+  root: CODE_DIR,
+  config: ENGINE_CONFIG,
+  io: $stdout,
+).run

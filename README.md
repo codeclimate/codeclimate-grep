@@ -15,7 +15,7 @@ engines:
     config:
       patterns:
         no-set-methods:
-          pattern: /def set_\w+/
+          pattern: "def set_\\w+"
           annotation: "Don't define methods that start with `set_`"
           severity: minor
           categories: Bug Risk
@@ -24,7 +24,7 @@ engines:
             urna eget libero fermentum bibendum. Duis dapibus, neque vel aliquet
             tincidunt, diam eros tempor neque
           path_patterns:
-            - "**.rb"
+            - "**/*.rb"
 ```
 
 `patterns` is a list of match configurations. Each key in it is an issue's check

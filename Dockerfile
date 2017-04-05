@@ -1,4 +1,5 @@
 FROM ruby:2.4-alpine
+LABEL maintainer="Code Climate <hello@codeclimate.com>"
 
 RUN apk --update add grep
 

@@ -16,8 +16,12 @@ ENGINE_CONFIG =
     {}
   end
 
-CC::Engine::Grep.new(
-  root: CODE_DIR,
-  config: ENGINE_CONFIG,
-  io: $stdout,
-).run
+begin
+  CC::Engine::Grep.new(
+    root: CODE_DIR,
+    config: ENGINE_CONFIG,
+    io: $stdout,
+  ).run
+rescue CC::Engine::ScannerConfig::InvalidConfigError
+  exit 1
+end

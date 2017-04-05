@@ -42,6 +42,9 @@ module CC
             io: io,
           ).run
         end
+      rescue ScannerConfig::InvalidConfigError => e
+        $stderr.puts e.message
+        raise
       rescue => e
         $stderr.puts e.message
       end

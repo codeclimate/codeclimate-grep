@@ -30,7 +30,7 @@ engines:
 `patterns` is a list of match configurations. Each key in it is an issue's check
 name. Values are individual match configurations.
 
-`pattern' is a required entry. It's a pattern to look for. This engine uses [GNU
+`pattern` is a required entry. It's a pattern to look for. This engine uses [GNU
 Extended Regular Expression syntax][] for patterns. Keep in mind that YAML uses
 backslash (`\`) as an escape opener. You may need to escape backslash (`\\`) if
 you use it in your pattern. Consult YAML spec [Escape Characters][] section for

@@ -82,28 +82,4 @@ RSpec.describe CC::Engine::Grep do
       io: io
     )
   end
-
-  it "handles exception in scanner" do
-    config = {
-      "include_paths" => ["test.txt"],
-      "config" => {
-        "patterns" => {
-          "pattern-1" => {},
-        }
-      }
-    }
-    io = StringIO.new
-
-    grep = described_class.new(
-      root: dir,
-      config: config,
-      io: io
-    )
-
-    expect do
-      expect do
-        grep.run
-      end.to raise_error(CC::Engine::ScannerConfig::InvalidConfigError)
-    end.to output("Pattern is missing from pattern-1\n").to_stderr
-  end
 end

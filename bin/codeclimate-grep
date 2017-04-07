@@ -22,6 +22,7 @@ begin
     config: ENGINE_CONFIG,
     io: $stdout,
   ).run
-rescue CC::Engine::ScannerConfig::InvalidConfigError
+rescue => e
+  $stderr.puts e.message
   exit 1
 end

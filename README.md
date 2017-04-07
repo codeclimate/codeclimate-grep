@@ -15,7 +15,7 @@ engines:
     config:
       patterns:
         no-set-methods:
-          pattern: /def set_\w+/
+          pattern: "def set_\\w+"
           annotation: "Don't define methods that start with `set_`"
           severity: minor
           categories: Bug Risk
@@ -31,7 +31,10 @@ engines:
 name. Values are individual match configurations.
 
 `pattern' is a required entry. It's a pattern to look for. This engine uses [GNU
-Extended Regular Expression syntax][] for patterns.
+Extended Regular Expression syntax][] for patterns. Keep in mind that YAML uses
+backslash (`\`) as an escape opener. You may need to escape backslash (`\\`) if
+you use it in your pattern. Consult YAML spec [Escape Characters][] section for
+details.
 
 `annotation` is a required entry. It's the issue description.
 
@@ -66,4 +69,5 @@ your question may have already been covered. If not, [go ahead and open a
 support ticket with us](https://codeclimate.com/help).
 
 [GNU Extended Regular Expression syntax]: https://www.gnu.org/software/grep/manual/grep.html#Regular-Expressions
+[Escape Characters]: http://www.yaml.org/spec/1.2/spec.html#id2776092
 [install the Code Climate CLI]: https://github.com/codeclimate/codeclimate

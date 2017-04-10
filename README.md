@@ -8,14 +8,14 @@ a message.
 
 Example config:
 
-```
+```yaml
 engines:
   grep:
     enabled: true
     config:
       patterns:
         no-set-methods:
-          pattern: "def set_\\w+"
+          pattern: def set_\w+
           annotation: "Don't define methods that start with `set_`"
           severity: minor
           categories: Bug Risk

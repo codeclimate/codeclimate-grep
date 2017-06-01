@@ -57,7 +57,7 @@ applied to. This patterns are used as a filter agains `include\_paths`.
 1. If you haven't already, [install the Code Climate CLI][].
 2. Run `codeclimate engines:enable grep`. This command both installs the engine
    and enables it in your `.codeclimate.yml` file.
-3. Edit your `.codelcimate.yml` and add patterns and message.
+3. Edit your `.codeclimate.yml` and add patterns and message.
 3. You're ready to analyze! Browse into your project's folder and run
    `codeclimate analyze`.
 

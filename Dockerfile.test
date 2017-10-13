@@ -1,0 +1,7 @@
+FROM codeclimate/codeclimate-grep
+
+WORKDIR /usr/src/app
+
+RUN bundler install --no-cache --with=test --system && \
+  chown -R app:app /usr/local/bundle && \
+  rm -r ~/.bundle

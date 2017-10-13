@@ -2,4 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "rspec", "~> 3.5.0"
+group :test do
+  gem "rspec", "~> 3.6.0"
+end

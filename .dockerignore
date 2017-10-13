@@ -1,1 +1,6 @@
-.git
+.*
+Makefile
+Dockerfile
+README.md
+spec
+circle.yml

@@ -14,7 +14,7 @@ module CC
         "basic" => "--basic-regexp",
         "extended" => "--extended-regexp",
         "perl" => "--perl-regexp",
-      }
+      }.freeze
 
       DEFAULT_MATCHER = "extended"
 

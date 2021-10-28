@@ -9,6 +9,15 @@ module CC
       ].freeze
       SEVERITIES = %w[info minor major critical blocker].freeze
 
+      REGEXP_OPTIONS = {
+        "fixed" => "--fixed-strings",
+        "basic" => "--basic-regexp",
+        "extended" => "--extended-regexp",
+        "perl" => "--perl-regexp",
+      }
+
+      DEFAULT_REGEXP = "extended"
+
       class InvalidConfigError < StandardError; end
 
       def initialize(config, check_name)
@@ -42,6 +51,14 @@ module CC
         config["content"]
       end
 
+      def regexp_option
+        regexp = config.fetch("regexp", DEFAULT_REGEXP)
+
+        REGEXP_OPTIONS.fetch(regexp) do
+          raise InvalidConfigError, %(Invalid regexp "#{regexp}" for #{check_name}. Must be one of the following: #{REGEXP_OPTIONS.keys.join ", "})
+        end
+      end
+
       private
 
       attr_reader :config, :check_name
@@ -50,6 +67,7 @@ module CC
         validate_required_config_entries!
         validate_severity!
         validate_categories!
+        validate_regexp!
       end
 
       def validate_required_config_entries!
@@ -73,6 +91,11 @@ module CC
             raise InvalidConfigError, %(Invalid category "#{category}" for #{check_name}. Must be one of the following: #{CATEGORIES.join ", "})
           end
         end
+      end
+
+      def validate_regexp!
+        # Option access validates, so just call eagerly
+        regexp_option
       end
     end
   end

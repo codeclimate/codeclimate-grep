@@ -47,6 +47,19 @@ RSpec.describe CC::Engine::ScannerConfig do
     end.to raise_error(described_class::InvalidConfigError, %(Invalid category "Invasion" for invalid-category. Must be one of the following: Bug Risk, Clarity, Compatibility, Complexity, Duplication, Performance, Security, Style))
   end
 
+  it "validates regexp" do
+    expect do
+      described_class.new(
+        {
+          "pattern" => "ack",
+          "annotation" => "Ack-Ack!!!",
+          "regexp" => "madeup"
+        },
+        "invalid-regexp",
+      )
+    end.to raise_error(described_class::InvalidConfigError, %(Invalid regexp "madeup" for invalid-regexp. Must be one of the following: fixed, basic, extended, perl))
+  end
+
   it "defaults severity to minor" do
     config = described_class.new(
       {
@@ -67,5 +80,16 @@ RSpec.describe CC::Engine::ScannerConfig do
       "default-categories",
     )
     expect(config.categories).to eq ["Bug Risk"]
+  end
+
+  it "defaults regexp to extended" do
+    config = described_class.new(
+      {
+        "pattern" => "test",
+        "annotation" => "Found it!",
+      },
+      "default-regexp"
+    )
+    expect(config.regexp_option).to eq "--extended-regexp"
   end
 end

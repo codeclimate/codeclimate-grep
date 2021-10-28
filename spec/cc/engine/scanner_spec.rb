@@ -94,7 +94,7 @@ RSpec.describe CC::Engine::Scanner do
     scanner = described_class.new(
       check_name: "test-match",
       config: {
-        "regexp" => "perl",
+        "matcher" => "perl",
         "pattern" => "^match me(?! not here)",
         "annotation" => "Found it!"
       },
@@ -114,7 +114,7 @@ RSpec.describe CC::Engine::Scanner do
     scanner = described_class.new(
       check_name: "test-match",
       config: {
-        "regexp" => "basic",
+        "matcher" => "basic",
         "pattern" => "cat\\|dog",
         "annotation" => "Found it!"
       },
@@ -134,7 +134,7 @@ RSpec.describe CC::Engine::Scanner do
     scanner = described_class.new(
       check_name: "test-match",
       config: {
-        "regexp" => "fixed",
+        "matcher" => "fixed",
         "pattern" => "cat|dog",
         "annotation" => "Found it!"
       },

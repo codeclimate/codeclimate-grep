@@ -40,7 +40,7 @@ module CC
       def grep_command(path)
         [
           "grep",
-          config.regexp_option,
+          config.matcher_option,
           "--color=always", # Highlight matches
           "--with-filename", "--line-number",
           "--binary-files=without-match",

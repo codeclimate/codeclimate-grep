@@ -9,14 +9,14 @@ module CC
       ].freeze
       SEVERITIES = %w[info minor major critical blocker].freeze
 
-      REGEXP_OPTIONS = {
+      MATCHER_OPTIONS = {
         "fixed" => "--fixed-strings",
         "basic" => "--basic-regexp",
         "extended" => "--extended-regexp",
         "perl" => "--perl-regexp",
       }
 
-      DEFAULT_REGEXP = "extended"
+      DEFAULT_MATCHER = "extended"
 
       class InvalidConfigError < StandardError; end
 
@@ -51,11 +51,11 @@ module CC
         config["content"]
       end
 
-      def regexp_option
-        regexp = config.fetch("regexp", DEFAULT_REGEXP)
+      def matcher_option
+        matcher = config.fetch("matcher", DEFAULT_MATCHER)
 
-        REGEXP_OPTIONS.fetch(regexp) do
-          raise InvalidConfigError, %(Invalid regexp "#{regexp}" for #{check_name}. Must be one of the following: #{REGEXP_OPTIONS.keys.join ", "})
+        MATCHER_OPTIONS.fetch(matcher) do
+          raise InvalidConfigError, %(Invalid matcher "#{matcher}" for #{check_name}. Must be one of the following: #{MATCHER_OPTIONS.keys.join ", "})
         end
       end
 
@@ -67,7 +67,7 @@ module CC
         validate_required_config_entries!
         validate_severity!
         validate_categories!
-        validate_regexp!
+        validate_matcher!
       end
 
       def validate_required_config_entries!
@@ -93,9 +93,9 @@ module CC
         end
       end
 
-      def validate_regexp!
+      def validate_matcher!
         # Option access validates, so just call eagerly
-        regexp_option
+        matcher_option
       end
     end
   end

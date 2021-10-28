@@ -16,7 +16,7 @@ engines:
       patterns:
         no-set-methods:
           pattern: def set_\w+
-          regexp: extended
+          matcher: extended
           annotation: "Don't define methods that start with `set_`"
           severity: minor
           categories: Bug Risk
@@ -37,7 +37,7 @@ backslash (`\`) as an escape opener. You may need to escape backslash (`\\`) if
 you use it in your pattern. Consult YAML spec [Escape Characters][] section for
 details.
 
-`regexp` is an optional entry, defaults to `extended`. Determines the
+`matcher` is an optional entry, defaults to `extended`. Determines the
 matcher type to be use by grep. The options match those supported by grep, being;
 - `extended` for `--extended-regexp`
 - `fixed` for `--fixed-strings`

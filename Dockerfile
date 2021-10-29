@@ -8,9 +8,11 @@ RUN adduser -u 9000 -D app
 RUN apk --no-cache add grep
 
 COPY Gemfile* ./
-RUN bundler install --no-cache --without=test --system && \
+
+RUN bundle install --quiet --no-cache --without=test && \
   chown -R app:app /usr/local/bundle && \
-  rm -r ~/.bundle
+  rm -fr ~/.gem ~/.bundle ~/.wh..gem && \
+  gem cleanup
 
 COPY . ./
 

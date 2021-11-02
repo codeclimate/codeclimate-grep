@@ -16,6 +16,7 @@ engines:
       patterns:
         no-set-methods:
           pattern: def set_\w+
+          matcher: extended
           annotation: "Don't define methods that start with `set_`"
           severity: minor
           categories: Bug Risk
@@ -35,6 +36,13 @@ Extended Regular Expression syntax][] for patterns. Keep in mind that YAML uses
 backslash (`\`) as an escape opener. You may need to escape backslash (`\\`) if
 you use it in your pattern. Consult YAML spec [Escape Characters][] section for
 details.
+
+`matcher` is an optional entry, defaults to `extended`. Determines the
+matcher type to be use by grep. The options match those supported by grep, being;
+- `extended` for `--extended-regexp`
+- `fixed` for `--fixed-strings`
+- `basic` for `--basic-regexp`
+- `perl` for `--perl-regexp`
 
 `annotation` is a required entry. It's the issue description.
 

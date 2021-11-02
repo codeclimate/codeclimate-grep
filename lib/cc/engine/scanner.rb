@@ -40,8 +40,8 @@ module CC
       def grep_command(path)
         [
           "grep",
+          config.matcher_option,
           "--color=always", # Highlight matches
-          "--extended-regexp",
           "--with-filename", "--line-number",
           "--binary-files=without-match",
           "--no-messages",

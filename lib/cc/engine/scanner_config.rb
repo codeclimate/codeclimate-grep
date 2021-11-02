@@ -9,6 +9,15 @@ module CC
       ].freeze
       SEVERITIES = %w[info minor major critical blocker].freeze
 
+      MATCHER_OPTIONS = {
+        "fixed" => "--fixed-strings",
+        "basic" => "--basic-regexp",
+        "extended" => "--extended-regexp",
+        "perl" => "--perl-regexp",
+      }.freeze
+
+      DEFAULT_MATCHER = "extended"
+
       class InvalidConfigError < StandardError; end
 
       def initialize(config, check_name)
@@ -42,6 +51,14 @@ module CC
         config["content"]
       end
 
+      def matcher_option
+        matcher = config.fetch("matcher", DEFAULT_MATCHER)
+
+        MATCHER_OPTIONS.fetch(matcher) do
+          raise InvalidConfigError, %(Invalid matcher "#{matcher}" for #{check_name}. Must be one of the following: #{MATCHER_OPTIONS.keys.join ", "})
+        end
+      end
+
       private
 
       attr_reader :config, :check_name
@@ -50,6 +67,7 @@ module CC
         validate_required_config_entries!
         validate_severity!
         validate_categories!
+        validate_matcher!
       end
 
       def validate_required_config_entries!
@@ -73,6 +91,11 @@ module CC
             raise InvalidConfigError, %(Invalid category "#{category}" for #{check_name}. Must be one of the following: #{CATEGORIES.join ", "})
           end
         end
+      end
+
+      def validate_matcher!
+        # Option access validates, so just call eagerly
+        matcher_option
       end
     end
   end

@@ -69,7 +69,7 @@ RSpec.describe CC::Engine::Scanner do
     expect(io.string).to eq ""
   end
 
-  it "understands extended regular expressions" do
+  it "understands extended regular expressions by default" do
     write_test_file "cat or dog"
     io = StringIO.new
     scanner = described_class.new(
@@ -86,6 +86,65 @@ RSpec.describe CC::Engine::Scanner do
 
     expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":1},"end":{"line":1,"column":4}}},"severity":"minor"}\n\u0000)
     expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":8},"end":{"line":1,"column":11}}},"severity":"minor"}\n\u0000)
+  end
+
+  it "can be configured for perl regular expressions" do
+    write_test_file "match me\nmatch me not here"
+    io = StringIO.new
+    scanner = described_class.new(
+      check_name: "test-match",
+      config: {
+        "matcher" => "perl",
+        "pattern" => "^match me(?! not here)",
+        "annotation" => "Found it!"
+      },
+      paths: ["test.txt"],
+      io: io
+    )
+
+    scanner.run
+
+    expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":1},"end":{"line":1,"column":9}}},"severity":"minor"}\n\u0000)
+    expect(io.string).not_to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":2,"column":9},"end":{"line":2,"column":9}}},"severity":"minor"}\n\u0000)
+  end
+
+  it "can be configured for basic matches" do
+    write_test_file "cat or dog"
+    io = StringIO.new
+    scanner = described_class.new(
+      check_name: "test-match",
+      config: {
+        "matcher" => "basic",
+        "pattern" => "cat\\|dog",
+        "annotation" => "Found it!"
+      },
+      paths: ["test.txt"],
+      io: io
+    )
+
+    scanner.run
+
+    expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":1},"end":{"line":1,"column":4}}},"severity":"minor"}\n\u0000)
+    expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":8},"end":{"line":1,"column":11}}},"severity":"minor"}\n\u0000)
+  end
+
+  it "can be configured for \"fixed string\" matches" do
+    write_test_file "cat|dog"
+    io = StringIO.new
+    scanner = described_class.new(
+      check_name: "test-match",
+      config: {
+        "matcher" => "fixed",
+        "pattern" => "cat|dog",
+        "annotation" => "Found it!"
+      },
+      paths: ["test.txt"],
+      io: io
+    )
+
+    scanner.run
+
+    expect(io.string).to include %({"type":"issue","check_name":"test-match","description":"Found it!","categories":["Bug Risk"],"location":{"path":"test.txt","positions":{"begin":{"line":1,"column":1},"end":{"line":1,"column":8}}},"severity":"minor"}\n\u0000)
   end
 
   it "includes content when available" do

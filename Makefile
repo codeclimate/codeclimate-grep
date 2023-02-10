@@ -1,4 +1,4 @@
-.PHONY: image test
+.PHONY: image test release
 
 IMAGE_NAME ?= codeclimate/codeclimate-grep
 RELEASE_REGISTRY ?= codeclimate

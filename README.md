@@ -1,81 +1,31 @@
-# Code Climate Grep Engine
+# Try Qlty today, the newest edition of Code Climate Quality.
+#### This repository is deprecated and archived.
 
-[![Code
-Climate](https://codeclimate.com/github/codeclimate/codeclimate-grep/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate-grep)
+This is a repository for a Code Climate Quality plugin which is packaged as a Docker image.
 
-`codeclimate-grep` is a Code Climate engine that finds specified text and gives
-a message.
+Code Climate Quality is being replaced with the new [Qlty](qlty.sh) code quality platform. Qlty uses a new plugin system which does not require packaging plugins as Docker images.
 
-Example config:
+As a result, this repository is no longer maintained and has been archived.
 
-```yaml
-engines:
-  grep:
-    enabled: true
-    config:
-      patterns:
-        no-set-methods:
-          pattern: def set_\w+
-          matcher: extended
-          annotation: "Don't define methods that start with `set_`"
-          severity: minor
-          categories: Bug Risk
-          content: >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id
-            urna eget libero fermentum bibendum. Duis dapibus, neque vel aliquet
-            tincidunt, diam eros tempor neque
-          path_patterns:
-            - "**/*.rb"
-```
+## Advantages of Qlty plugins
+The new Qlty plugins system provides key advantages over the older, Docker-based plugin system:
 
-`patterns` is a list of match configurations. Each key in it is an issue's check
-name. Values are individual match configurations.
+- Linting runs much faster without the overhead of virtualization
+- New versions of linters are available immediately without needing to wait for a re-packaged release
+- Plugins can be run with any arbitrary extensions (like extra rules and configs) without requiring pre-packaging
+- Eliminates security issues associated with exposing a Docker daemon
 
-`pattern` is a required entry. It's a pattern to look for. This engine uses [GNU
-Extended Regular Expression syntax][] for patterns. Keep in mind that YAML uses
-backslash (`\`) as an escape opener. You may need to escape backslash (`\\`) if
-you use it in your pattern. Consult YAML spec [Escape Characters][] section for
-details.
+## Try out Qlty today free
 
-`matcher` is an optional entry, defaults to `extended`. Determines the
-matcher type to be use by grep. The options match those supported by grep, being;
-- `extended` for `--extended-regexp`
-- `fixed` for `--fixed-strings`
-- `basic` for `--basic-regexp`
-- `perl` for `--perl-regexp`
+[Qlty CLI](https://docs.qlty.sh/cli/quickstart) is the fastest linter and auto-formatter for polyglot teams. It is completely free and available for Mac, Windows, and Linux.
 
-`annotation` is a required entry. It's the issue description.
+  - Install Qlty CLI:
+`
+curl https://qlty.sh | sh # Mac or Linux
+`
+or ` <windows install line> `
 
-`severity` is an optional entry, default is `minor`. Possible values are `info`,
-`minor`, `major`, `critical`, or `blocker`.
+[Qlty Cloud](https://docs.qlty.sh/cloud/quickstart) is a full code health platform for integrating code quality into development team workflows. It is free for unlimited private contributors.
+  - [Try Qlty Cloud today](https://docs.qlty.sh/cloud/quickstart)
 
-`categories` is an optional entry, defaults to `["Bug Risk"]`. It's a list of
-categories this issue falls into. Maybe a string if you want to specify only one
-category. Possible vallues are `Bug Risk`, `Clarity`, `Compatibility`,
-`Complexity`, `Duplication`, `Performance`, `Security`, and `Style`.
-
-`content` is an optional entry. It's an extended description of the issue.
-
-`path\_patterns` is an optional entry, defaults to all scannable files. It's a
-list of file path patterns (in shell glob syntax) to limit files this match is
-applied to. This patterns are used as a filter agains `include\_paths`.
-
-### Installation
-
-1. If you haven't already, [install the Code Climate CLI][].
-2. Run `codeclimate engines:enable grep`. This command both installs the engine
-   and enables it in your `.codeclimate.yml` file.
-3. Edit your `.codeclimate.yml` and add patterns and message.
-3. You're ready to analyze! Browse into your project's folder and run
-   `codeclimate analyze`.
-
-### Need help?
-
-If you're running into a Code Climate issue, first look over this project's
-[GitHub Issues](https://github.com/codeclimate/codeclimate-grep/issues), as
-your question may have already been covered. If not, [go ahead and open a
-support ticket with us](https://codeclimate.com/help).
-
-[GNU Extended Regular Expression syntax]: https://www.gnu.org/software/grep/manual/grep.html#Regular-Expressions
-[Escape Characters]: http://www.yaml.org/spec/1.2/spec.html#id2776092
-[install the Code Climate CLI]: https://github.com/codeclimate/codeclimate
+**Note**: For existing customers of Quality, please see our [Migration Guide](https://docs.qlty.sh/migration/guide) for more information and resources.
